@@ -1,0 +1,1 @@
+//https://developer.mozilla.org/ru/docs/Web/API/Event/target - ссылка на обработку род. элемента

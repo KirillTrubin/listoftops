@@ -27,7 +27,7 @@ export default function ListOfTop20(){
             .then(
                 (result) => {
                     setIsLoaded(true);
-                    setItems(result);
+                    setItems(result.data.movies);
                 },
                 (error) => {
                     setIsLoaded(true);

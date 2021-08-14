@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './ListStyle.css';
 import ReactDOM from 'react';
-import SaveToLS from './SaveObj';
-import DeleteFromLS from './DeleteObj';
 import ShowMovies from './ShowMovieList.js';
-import AddFavourite from './AddFavourites';
+import AddFavorite from './AddFavorites';
+import RemoveFavorite from './DeleteObj';
+import DoughnutDiag from './Diagram';
 
 export default function ListOfTop20(){
     const [count, setCount] = useState(0);
@@ -15,10 +15,28 @@ export default function ListOfTop20(){
 
     const TOKEN = '345afb1e-d1ea-4de9-80fd-9363d0200b32';
 
+    const saveToLocalStorage = (items) => {
+        localStorage.setItem('favourites', JSON.stringify(items))
+    };
+
     function AddFavMov(movie){
         const newFavList = [...favs, movie];
         setFavs(newFavList);
+        saveToLocalStorage(newFavList);
     }
+
+    function RemoveFavMov(movie){
+        const newFavList = favs.filter(
+            (fav) => fav.urlPoster !== movie.urlPoster
+        );
+        setFavs(newFavList);
+        saveToLocalStorage(newFavList);
+    }
+
+    useEffect (() => {
+        const MovieFavs = JSON.parse(localStorage.getItem('favourites'));
+        setFavs(MovieFavs);
+    }, []);
 
     useEffect(() => 
     {
@@ -43,9 +61,18 @@ export default function ListOfTop20(){
     }
     else{
         return(
+        <>
             <div className='ListOfTops'>
-                <ShowMovies movies={items} handleFavsClick={AddFavMov} favComp={AddFavourite}/>
-            </div>            
+                <ShowMovies movies={items} handleFavsClick={AddFavMov} favComp={AddFavorite}/>
+            </div>
+            <div class='diagram'>
+                <DoughnutDiag />
+            </div>
+            <div class="FavMovies">
+                <h1 class='FavsHeading'>FAVORITES</h1>
+                <ShowMovies movies={favs} handleFavsClick={RemoveFavMov} favComp={RemoveFavorite}/>
+            </div>
+        </>         
         );
     }
 }

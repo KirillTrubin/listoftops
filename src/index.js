@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 //import App from './App';
 import ListOfTop20 from './MovieRequest';
 import './ListStyle.css';
-import { validate } from '@babel/types';
 import ShowMovies from './ShowMovieList';
 
 

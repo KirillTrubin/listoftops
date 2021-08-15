@@ -1,6 +1,7 @@
 import React from 'react';
+import { PieChart } from 'react-minimal-pie-chart';
 
-export default function DoughnutDiag(props){
+/*export default function DoughnutDiag(props){
     var ctx = document.getElementById('root').getContext('2d');
     chart.data.years = props.years;
     var chart = new chart(ctx, {
@@ -21,4 +22,36 @@ export default function DoughnutDiag(props){
         options: {}
     });
     return(chart);
+}*/
+
+export default function Diagram(props){
+    const years = props.movies.map((movie) => movie.year);
+    const savedYears=[];
+    const ObjYears = {};
+
+    for(let year of years){
+        if(ObjYears[year]){
+            continue;
+        }  
+
+        let count = 0;
+
+        for(let j=0; j<years.length-1; j++){
+            if(years[j] === year){
+                count++;
+            }
+        }
+        
+        ObjYears[year] = count;
+    }
+
+    for(let year in ObjYears){
+        savedYears.push({title:year, value: ObjYears[year], color: 'brown'})
+    }
+
+    return(
+        <PieChart
+        data={savedYears}
+        />
+    )
 }

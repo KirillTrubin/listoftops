@@ -1,12 +1,13 @@
 import React from 'react';
+import RemoveFav from './DeleteObj';
 import AddFavorite from './AddFavorites';
 
 export default function ShowMovies(props){
-    const FavComp = props.favComp;
+    
     return(
         <>
-        {props.movies.map((movie, index) => (
-            <div className='FilmCard'>
+        {props.movies.map((movie) => (
+            <div className='FilmCard' key={movie.idIMDB}>
                 <div className='FilmContainer'>
                     <img src={movie.urlPoster}></img>
                     <div>{movie.title}</div>
@@ -14,7 +15,7 @@ export default function ShowMovies(props){
                     <div>{movie.year}</div>
                 </div>
                 <div className='Star' onClick={() => props.handleFavsClick(movie)}>
-                    <button className='FavBut'><FavComp /></button>
+                    <button className='FavBut'>{props.showAdd? <AddFavorite/> : <RemoveFav/>}</button>
                 </div>
             </div>
         ))}

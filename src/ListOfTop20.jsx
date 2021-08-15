@@ -1,54 +1,54 @@
 import React, { useState, useEffect } from 'react';
-import './ListStyle.css';
-import ReactDOM from 'react';
 import ShowMovies from './ShowMovieList.js';
 import AddFavorite from './AddFavorites';
 import RemoveFavorite from './DeleteObj';
-import DoughnutDiag from './Diagram';
+import Diagram from './Diagram';
+import './ListStyle.css';
+
+const TOKEN = '345afb1e-d1ea-4de9-80fd-9363d0200b32';
+const URL = `https://www.myapifilms.com/imdb/top?start=1&end=20&token=${TOKEN}`;
 
 export default function ListOfTop20(){
-    const [count, setCount] = useState(0);
-    const [isLoaded, setIsLoaded] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [items, setItems] = useState([]);
     const [error, setError] = useState(null);
     const [favs, setFavs] = useState([]);
-
-    const TOKEN = '345afb1e-d1ea-4de9-80fd-9363d0200b32';
 
     const saveToLocalStorage = (items) => {
         localStorage.setItem('favourites', JSON.stringify(items))
     };
 
-    function AddFavMov(movie){
-        const newFavList = [...favs, movie];
+    function addFavMov(movie){
+        const newFavList = [...favs, movie.idIMDB];
         setFavs(newFavList);
         saveToLocalStorage(newFavList);
     }
 
-    function RemoveFavMov(movie){
+    function removeFavMov(movie){
         const newFavList = favs.filter(
-            (fav) => fav.urlPoster !== movie.urlPoster
+            (fav) => fav !== movie.idIMDB
         );
         setFavs(newFavList);
         saveToLocalStorage(newFavList);
     }
 
     useEffect (() => {
-        const MovieFavs = JSON.parse(localStorage.getItem('favourites'));
+        const MovieFavs = JSON.parse(localStorage.getItem('favourites')) || [];
         setFavs(MovieFavs);
     }, []);
 
     useEffect(() => 
     {
-        fetch(`https://www.myapifilms.com/imdb/top?start=1&end=20&token=${TOKEN}`)
+        setIsLoading(true);
+        fetch(URL)
             .then(res => res.json())
             .then(
                 (result) => {
-                    setIsLoaded(true);
+                    setIsLoading(false);
                     setItems(result.data.movies);
                 },
                 (error) => {
-                    setIsLoaded(true);
+                    setIsLoading(false);
                     setError(error);
                 }  
             )
@@ -59,20 +59,22 @@ export default function ListOfTop20(){
             <div>{error.message}</div>
         )
     }
-    else{
+    if(isLoading){
+        return(
+            <h1>Loading...</h1>
+        )
+    }
+
         return(
         <>
             <div className='ListOfTops'>
-                <ShowMovies movies={items} handleFavsClick={AddFavMov} favComp={AddFavorite}/>
+                <ShowMovies movies={items} handleFavsClick={addFavMov} showAdd/>
             </div>
-            <div class='diagram'>
-                <DoughnutDiag />
-            </div>
-            <div class="FavMovies">
-                <h1 class='FavsHeading'>FAVORITES</h1>
-                <ShowMovies movies={favs} handleFavsClick={RemoveFavMov} favComp={RemoveFavorite}/>
+            <div className='diagram'><Diagram movies={items}/></div>
+            <div className="FavMovies">
+                <h1 className='FavsHeading'>FAVORITES</h1>
+                <ShowMovies movies={items.filter((item) => favs.includes(item.idIMDB))} handleFavsClick={removeFavMov} />
             </div>
         </>         
         );
     }
-}

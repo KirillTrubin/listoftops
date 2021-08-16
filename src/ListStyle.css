@@ -43,20 +43,12 @@
     justify-content: center;
     align-items: center;
 }
-.StarPic:hover{
-    height: 70px;
-    width: 70px;
-    transition: 1s;
-}
 .FavBut{
     background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     border: none;
-}
-.FavBut:hover{
-    background-color: black;
 }
 .FavMovies{
     margin-top: 100px;
@@ -75,6 +67,23 @@
     margin-top: 100px;
     margin-bottom: 100px;
 }
+
+.tab-list {  border-bottom: 1px solid #ccc;
+    padding-left: 0;
+  }
+  
+  .tab-list-item {
+    display: inline-block;
+    list-style: none;
+    margin-bottom: -1px;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .tab-list-active {
+    background-color: white;
+    border: solid #ccc;
+    border-width: 1px 1px 0 1px;
+  }
 
 @media screen and (max-width : 1300px){
     .Star{

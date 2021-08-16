@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+//import Tab from './Tabs';
 import ShowMovies from './ShowMovieList.js';
 import AddFavorite from './AddFavorites';
 import RemoveFavorite from './DeleteObj';
 import Diagram from './Diagram';
+import LoaderSpin from './Loader.js';
 import './ListStyle.css';
 
 const TOKEN = '345afb1e-d1ea-4de9-80fd-9363d0200b32';
@@ -13,6 +15,11 @@ export default function ListOfTop20(){
     const [items, setItems] = useState([]);
     const [error, setError] = useState(null);
     const [favs, setFavs] = useState([]);
+    const [butActive, setBut] = useState(false);
+
+    function SetButActivity(){
+
+    }
 
     const saveToLocalStorage = (items) => {
         localStorage.setItem('favourites', JSON.stringify(items))
@@ -61,14 +68,14 @@ export default function ListOfTop20(){
     }
     if(isLoading){
         return(
-            <h1>Loading...</h1>
+            <h1><LoaderSpin /></h1>
         )
     }
 
         return(
         <>
             <div className='ListOfTops'>
-                <ShowMovies movies={items} handleFavsClick={addFavMov} showAdd/>
+                <ShowMovies movies={items} favs={favs} handleFavsClick={addFavMov} showAdd/>
             </div>
             <div className='diagram'><Diagram movies={items}/></div>
             <div className="FavMovies">

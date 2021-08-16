@@ -1,0 +1,110 @@
+.FilmCard{
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 200px;
+    border: 3px solid black;
+}
+.FilmContainer{
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.FilmContainer img{
+    overflow-y: hidden;
+    overflow-x: hidden;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.FilmContainer div{
+    width: 20%;
+    margin-right: 25px;
+    font-size: 25px;
+    color: black;
+    font-family:fantasy;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.ListOfTops{
+    display: flex;
+    flex-direction: column;
+}
+.Star{
+    height: 100%;
+    width: 20%;
+    border-left: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.FavBut{
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+}
+.FavMovies{
+    margin-top: 100px;
+}
+.FavsHeading{
+    font-size: 50px;
+    font-family: fantasy;
+    color: gold;
+}
+.diagram{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 700px;
+    width: 700px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.tab-list {  border-bottom: 1px solid #ccc;
+    padding-left: 0;
+  }
+  
+  .tab-list-item {
+    display: inline-block;
+    list-style: none;
+    margin-bottom: -1px;
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .tab-list-active {
+    background-color: white;
+    border: solid #ccc;
+    border-width: 1px 1px 0 1px;
+  }
+
+@media screen and (max-width : 1300px){
+    .Star{
+        height: 20%;
+        width: 100%;
+        border-top: 2px solid black;
+        border-left: none;
+    }  
+    .FilmContainer{
+        height: 80%;
+        flex-direction: column;
+        justify-content: center;
+    } 
+    .FilmCard{
+        flex-direction: column;
+        height: 500px;
+        justify-content: center;
+        align-items: center;
+    }
+    .FilmContainer div{
+        margin-top: 15px;
+        margin-right: 0;
+    }
+}
